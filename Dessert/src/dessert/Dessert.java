@@ -1,0 +1,60 @@
+package dessert;
+
+public class Dessert {
+
+    private final String name;     // ชื่อของหวาน
+    private final double price;    // ราคาของหวาน
+    private final int quality;     // คุณภาพของของหวาน 10 คือ คุณภาพดี; 1 คือคุณภาพด้อย
+
+    public Dessert(String name, double price, int quality) {
+        this.name = (name == null) ? "" : name;   //name ชื่อของหวาน โดยให้ชื่อเป็น "" ถ้าส่งมาเป็น null
+        this.price = (price < 0) ? 0 : price;     //price ราคา โดยให้ราคาเป็น 0 ถ้าส่งราคามาน้อยกว่า 0
+        this.quality = (quality < 1) ? 1 : (quality > 10) ? 10 : quality;
+        /*quality คุณภาพ โดยให้คุณภาพเป็น 1 
+          ถ้าส่งคุณภาพมาน้อยกว่า 1 และให้คุณภาพเป็น 10                                                                       
+         ถ้าส่งคุณภาพมาเกิน 10*/
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getQuality() {
+        return quality;
+    }
+
+    /*คืนค่าเป็น ชื่อของหวาน, ราคาเป็นทศนิยม 2 ตำแหน่ง, และคุณภาพ
+     return Name (price:#.00, quality:#)*/
+    @Override
+    public String toString() {
+        return String.format("%s (price:%.2f, quality:%d)", name, price, quality);
+    }
+
+    /*
+    *เปรียบเทียบว่ามีทุกอย่างเหมือนกันหรือไม่
+    * d ผลไม้อื่น
+    * return true ถ้าเป็นของหวานชื่อเดียวกัน ราคาเท่ากัน และคุณภาพเท่ากัน;
+    * false ถ้า f เป็น null หรือ f มีชื่อ ราคา หรือคุณภาพ แตกต่างจากผลไม้นี้
+     */
+    public boolean equals(Dessert d) {
+        return d != null && this.name.equals(d.name) && this.price == d.price && this.quality == d.quality;
+    }
+
+    /*
+     * เปรียบเทียบว่าของหวานนี้คุณภาพดีกว่า ด้อยกว่า หรือเท่ากันกับของหวาน d
+     * d ผลไม้ที่ต้องการเปรียบเทียบ
+     * return 1 ถ้าของหวานนี้คุณภาพดีกว่าของหวาน d หรือของหวาน d เป็น null; -1
+     * ถ้าของหวานนี้คุณภาพด้อยกว่าของหวาน d; 0 ถ้าของหวานนี้และของหวาน d คุณภาพเท่ากัน
+     */
+    public int compare(Dessert d) {
+        if (d == null) {
+            return 1;
+        }
+        int val = this.quality - d.quality;
+        return (val > 0) ? 1 : (val < 0) ? -1 : 0;
+    }
+}
